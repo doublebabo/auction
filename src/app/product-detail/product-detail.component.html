@@ -1,0 +1,41 @@
+<div class="thumbnail">
+  <img src="http://placehold.it/820x230" alt="">
+  <div>
+    <h4 class="pull-right">{{product?.price}}元</h4>
+    <h4>{{product?.title}}元</h4>
+    <p>{{product?.desc}}</p>
+  </div>
+  <div>
+    <p class="pull-right">共{{comments?.length}}条评论</p>
+    <p>
+      <app-stars [rating]="product?.rating | number: '1.1-2'" [isReadonly]="true"></app-stars>
+    </p>
+  </div>
+</div>
+<div class="thumbnail">
+  <button class="btn btn-default btn-lg" (click)="watchProduct()">
+    {{isWatched?'取消关注':'关注'}}
+  </button>
+  <label>最新初价{{currentPrice | number:'3.0-2'}}</label>
+</div>
+<div class="well">
+  <div>
+    <button class="btn btn-info" (click)="showCommentBox = !showCommentBox">发表评论</button>
+    <div [hidden]="!showCommentBox" >
+      <app-stars [isReadonly]="false" [rating]="newRating" (ratingChanges)="_ratingChange($event)"></app-stars>
+      <textarea [(ngModel)]="newComment">
+      </textarea>
+      <p><button class="btn btn-primary" (click)="addComment()">提交</button></p>
+    </div>
+  </div>
+  <div class="row" *ngFor="let comment of comments">
+    <hr>
+    <div class="col-md-12">
+      <app-stars [rating]="comment.rating" [isReadonly]="true"></app-stars>
+      <span>{{comment.user}}：</span>
+      <span class="pull-right" style="font-size: 0.5rem">Date：{{comment.timestamp}}</span>
+      <p>{{comment.content}}</p>
+    </div>
+  </div>
+</div>
+
